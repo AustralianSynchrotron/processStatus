@@ -1,0 +1,9 @@
+# $File: //ASP/tec/epics/processStatus/trunk/processStatusSup/src/processStatus.dbd $
+# $Revision: #2 $
+# $DateTime: 2016/12/09 10:15:25 $
+# Last checked in by: $Author: starritt $
+#
+
+registrar (ProcessStatusStartup)
+
+# end
