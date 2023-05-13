@@ -1,8 +1,8 @@
 #!../../bin/linux-x86_64/processStatusTest
 #
 # $File: //ASP/tec/epics/processStatus/trunk/iocBoot/iocprocessStatusTest/st.cmd $
-# $Revision: #1 $
-# $DateTime: 2016/06/04 15:30:06 $
+# $Revision: #2 $
+# $DateTime: 2023/05/13 17:23:14 $
 # Last checked in by: $Author: starritt $
 #
 ## You may have to change processStatusTest to something else
