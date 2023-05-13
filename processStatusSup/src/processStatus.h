@@ -18,12 +18,12 @@
  * ProcessStatus_Configure ("HTTP",   "httpd", 0, "")
  *
  *
- * Copyright (c) 2016-2020 Australian Synchrotron
+ * Copyright (c) 2016-2023 Australian Synchrotron
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * Licence as published by the Free Software Foundation; either
- * version 2.1 of the Licence, or (at your option) any later version.
+ * version 3 of the Licence, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -34,8 +34,11 @@
  * Licence along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
+ * Original author: Andrew Starritt
+ * Maintained by:   Andrew Starritt
+ *
  * Contact details:
- * firstname.andrew@synchrotron.org.au
+ * as-open-source@ansto.gov.au
  * 800 Blackburn Road, Clayton, Victoria 3168, Australia.
 */
 

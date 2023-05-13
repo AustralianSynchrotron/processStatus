@@ -37,6 +37,8 @@ BUNDLE=
 ASYN=$(BUNDLE)/epics/asyn
 
 # EPICS_BASE usually appears last so other apps can override stuff:
+# Modify this to reference to __your__ local EPICS base installation.
+#
 EPICS_BASE=$(BUNDLE)/epics/base
 
 # Set RULES here if you want to take build rules from somewhere

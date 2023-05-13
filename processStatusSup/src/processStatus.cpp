@@ -6,12 +6,12 @@
  * Description:
  * This is an ASYN port driver to support process status.
  *
- * Copyright (c) 2016 Australian Synchrotron
+ * Copyright (c) 2016-2023 Australian Synchrotron
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * Licence as published by the Free Software Foundation; either
- * version 2.1 of the Licence, or (at your option) any later version.
+ * version 3 of the Licence, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,8 +22,11 @@
  * Licence along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
+ * Original author: Andrew Starritt
+ * Maintained by:   Andrew Starritt
+ *
  * Contact details:
- * andrew.starritt@synchrotron.org.au
+ * as-open-source@ansto.gov.au
  * 800 Blackburn Road, Clayton, Victoria 3168, Australia.
  */
 
@@ -58,7 +61,7 @@
 //
 #define ARRAY_LENGTH(xx)   ((int) (sizeof (xx) /sizeof (xx [0])))
 
-#define PROCESS_STATUS_DRIVER_VERSION   "1.1"
+#define PROCESS_STATUS_DRIVER_VERSION   "1.1.5"
 
 struct QualifierDefinitions {
    asynParamType type;
@@ -122,15 +125,17 @@ static void devprintf (const int required_min_verbosity,
 //
 //==============================================================================
 //
-ProcessStatusDriver::Qualifiers ProcessStatusDriver::reasonToQualifier (const int reason) const
+ProcessStatusDriver::Qualifiers
+ProcessStatusDriver::reasonToQualifier (const int reason) const
 {
-   return (Qualifiers) (reason - this->indexList [0]);
+   return Qualifiers (reason - this->indexList [0]);
 }
 
 //------------------------------------------------------------------------------
 // static
 //
-const char* ProcessStatusDriver::qualifierImage (const Qualifiers q) {
+const char* ProcessStatusDriver::qualifierImage (const Qualifiers q)
+{
    static char result [24];
 
    if ((q >= 0) && (q < NUMBER_QUALIFIERS)) {
@@ -144,7 +149,8 @@ const char* ProcessStatusDriver::qualifierImage (const Qualifiers q) {
 //------------------------------------------------------------------------------
 // static
 //
-static void ProcessStatus_Initialise (const int verbosityIn) {
+static void ProcessStatus_Initialise (const int verbosityIn)
+{
    verbosity = verbosityIn;
    driver_initialised = true;
 }
@@ -158,7 +164,6 @@ ProcessStatusDriver::ProcessStatusDriver (const char* port_name,
 
    asynPortDriver (port_name,             //
                    0,                     //
-                   NUMBER_QUALIFIERS,     //
                    interfaceMask,         //
                    interruptMask,         //
                    asynFlags,             //
@@ -209,9 +214,13 @@ ProcessStatusDriver::ProcessStatusDriver (const char* port_name,
    // Set up asyn parameters.
    //
    for (int j = 0; j < ARRAY_LENGTH (qualifierList); j++) {
-      status = createParam (qualifierList[j].name,
-                            qualifierList[j].type,
-                            &this->indexList[j]);
+      status = this->createParam (qualifierList[j].name,
+                                  qualifierList[j].type,
+                                  &this->indexList[j]);
+      if (status != asynSuccess) {
+          ERROR ("%s createParam %d '%s' failed\n", this->full_name, j, qualifierList[j].name)
+          return;
+      }
    }
 
    // Attempt to compile the regular expression.
@@ -344,7 +353,8 @@ int ProcessStatusDriver::extractProcessInfo (int &pid) const
 // Asyn callback functions
 //------------------------------------------------------------------------------
 //
-void ProcessStatusDriver::report (FILE * fp, int details) {
+void ProcessStatusDriver::report (FILE * fp, int details)
+{
    if (details > 0) {
       fprintf (fp, "    driver info:\n");
       fprintf (fp, "        process name:   %s\n", this->process_name);
@@ -485,7 +495,8 @@ static const iocshFuncDef ProcessStatus_Initialise_Func_Def = {
    "ProcessStatus_Initialise", 1, ProcessStatus_Initialise_Args
 };
 
-static void Call_ProcessStatus_Initialise (const iocshArgBuf* args) {
+static void Call_ProcessStatus_Initialise (const iocshArgBuf* args)
+{
    ProcessStatus_Initialise (args[0].ival);
 }
 
@@ -503,7 +514,8 @@ static const iocshFuncDef ProcessStatus_Configure_Func_Def = {
    "ProcessStatus_Configure", 4, ProcessStatus_Configure_Args
 };
 
-static void Call_ProcessStatus_Configure (const iocshArgBuf* args) {
+static void Call_ProcessStatus_Configure (const iocshArgBuf* args)
+{
    new ProcessStatusDriver (args[0].sval, args[1].sval, args[2].ival, args[3].sval);
 }
 

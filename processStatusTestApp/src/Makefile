@@ -22,12 +22,12 @@ DBD += processStatusTest.dbd
 processStatusTest_DBD += base.dbd
 
 # Include dbd files from all support applications:
-#
-processStatusTest_DBD += processStatus.dbd
-
 # Add all the support libraries needed by this IOC
 #
+processStatusTest_DBD  += asyn.dbd
 processStatusTest_LIBS += asyn
+
+processStatusTest_DBD  += processStatus.dbd
 processStatusTest_LIBS += processStatus
 
 # processStatusTest_registerRecordDeviceDriver.cpp derives from processStatusTest.dbd
