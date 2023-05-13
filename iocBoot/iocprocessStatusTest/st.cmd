@@ -23,6 +23,12 @@ processStatusTest_registerRecordDeviceDriver pdbbase
 #
 ProcessStatus_Initialise (2)
 
+# Parameters
+# 1 asyn port name
+# 2 program name (out of /proc/<pid>/cmdline
+# 3 parameter number (or 0 if not applicable)
+# 4 regular expression to match parameter.
+#
 ProcessStatus_Configure ("PSBASH",  "bash",        0, "")
 ProcessStatus_Configure ("PSINIT",  "/sbin/init",  0 )
 ProcessStatus_Configure ("PSSLEEP", "sleep",       1, "^500$")
